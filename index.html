@@ -4,96 +4,919 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="xkupBJD4mlE9usbClUPyfZeHkD4EeqNdD68vpMqcj9s" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn how to track fuel efficiency, manage fuel costs, and optimize fuel consumption with practical insights.">
-    <title>Fuel Efficiency & Cost Management Guide</title>
+    <title>2025 Ultimate Guide: Track Your Fuel, Slash Costs, Drive Smarter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #2874a6;
+            --accent-color: #17a2b8;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --text-color: #333;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background-color: #f9f9f9;
-            color: #333;
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
         }
-        h1, h2 {
-            color: #8C52FF;
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.2);
         }
-        a {
-            color: #0073e6;
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: width 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></svg>');
+            background-size: 20px 20px;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .fuel-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--dark-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            color: white;
+            padding: 1rem 1.5rem;
             text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
         }
-        .container {
-            background: white;
-            padding: 20px;
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
         }
-        .link-box {
-            margin-top: 20px;
-            padding: 10px;
-            background: #f2f2f2;
-            border-left: 5px solid #8C52FF;
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .link-box a {
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Benefits List */
+        .benefits-list {
+            list-style-type: none;
+            margin: 1.5rem 0;
+        }
+
+        .benefits-list li {
+            padding: 0.8rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+
+        .benefits-list li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Tips Cards */
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tip-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-card h4 i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .tip-card ul {
+            padding-left: 1.5rem;
+        }
+
+        /* Statistics */
+        .stat-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
             font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--dark-color);
+        }
+
+        /* Podcast Section */
+        .podcast-section {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .podcast-player {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .podcast-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-right: 1.5rem;
+        }
+
+        .podcast-info {
+            text-align: left;
+        }
+
+        .podcast-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .listen-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .listen-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Tracker Section */
+        .tracker-section {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .tracker-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tracker-feature {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .tracker-feature i {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .tracker-btn {
+            display: inline-block;
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .tracker-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background-color: var(--light-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #e0e0e0;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .nav-item {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            .tips-container {
+                grid-template-columns: 1fr;
+            }
+
+            .podcast-player {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .podcast-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .podcast-info {
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Be a Smart Guy: Track Your Fuel Usage & Save Money</h1>
-    <p>Managing fuel consumption is essential for both **cost savings and efficiency**. Whether you are a driver, business owner, or someone who tracks fuel expenses, understanding your fuel usage helps in **reducing costs and improving performance**.</p>
-
-    <h2>Why Should You Track Fuel Usage?</h2>
-    <p>Fuel tracking is not just for professionals—it benefits **everyone** by:</p>
-    <ul>
-        <li>📊 **Saving money** – Identify unnecessary fuel expenses.</li>
-        <li>⏳ **Optimizing vehicle performance** – Improve fuel efficiency.</li>
-        <li>🌱 **Reducing environmental impact** – Use fuel more effectively.</li>
-        <li>🚗 **Understanding driving habits** – Adjust for better mileage.</li>
-    </ul>
-
-    <h2>How to Improve Your Fuel Efficiency</h2>
-    <p>By following some simple strategies, you can **reduce fuel consumption** and improve cost-effectiveness:</p>
-    <ul>
-        <li>🚗 **Drive smoothly** – Sudden acceleration wastes fuel.</li>
-        <li>🔄 **Use cruise control** – Helps maintain a steady speed.</li>
-        <li>⚙️ **Check tire pressure** – Under-inflated tires increase fuel consumption.</li>
-        <li>⛽ **Choose high-quality fuel** – Some fuels provide better efficiency.</li>
-        <li>💡 **Reduce unnecessary weight** – Lighten your vehicle for better mileage.</li>
-    </ul>
-
-    <h2>Get Real-Time Fuel Tracking Data</h2>
-    <p>We have compiled valuable insights and fuel efficiency data in a **Google Sheet**, which is regularly updated with the latest trends and discussions. Click below to access it:</p>
-
-    <div class="link-box">
-        📊 <strong>Fuel Efficiency & Cost Management Data:</strong>  
-        <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSaNK6iSXH1-JZSk52TQKh_ihBO52qYX1wufrVGuw_3y5if2jWRJHJiUnrUw4u5B0LRxEHA6Tw_FZOL/pubhtml" target="_blank">
-            View the Fuel Tracking Google Sheet
-        </a>  
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar"></div>
     </div>
 
-    <h2>Why This Data is Useful</h2>
-    <p>Our Google Sheet includes data and discussions on:</p>
-    <ul>
-        <li>🚘 **Common fuel efficiency problems** faced by drivers.</li>
-        <li>📈 **Trends in fuel prices** and their impact on consumption.</li>
-        <li>🛞 **Vehicle-specific fuel issues** and solutions.</li>
-        <li>🛠 **Tips from mechanics and experts** on improving fuel economy.</li>
-    </ul>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="fuel-icon">
+                <i class="fas fa-gas-pump"></i>
+            </div>
+            <h1>2025 Ultimate Guide: Track Your Fuel, Slash Costs, Drive Smarter</h1>
+        </div>
+    </header>
 
-    <h2>Final Thoughts</h2>
-    <p>Fuel efficiency is **key to saving money and reducing waste**. Whether you are driving daily, running a business, or just want to track your expenses, monitoring fuel usage helps you **stay in control and be cost-effective**.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#introduction" class="nav-item">Introduction</a>
+            <a href="#why-tracking" class="nav-item">Why Track</a>
+            <a href="#efficiency-tips" class="nav-item">Efficiency Tips</a>
+            <a href="#podcast" class="nav-item">Podcast</a>
+            <a href="#tracker" class="nav-item">Tracker</a>
+            <a href="#conclusion" class="nav-item">Conclusion</a>
+            <a href="#faq" class="nav-item">FAQ</a>
+        </div>
+    </nav>
 
-    <p><strong>Start tracking your fuel consumption today and make smarter financial decisions!</strong></p>
+    <!-- Main Content -->
+    <main>
+        <!-- Introduction Section -->
+        <section id="introduction">
+            <p>Fuel is one of the biggest variable expenses for any driver or business in 2025. With gasoline prices still volatile and new efficiency standards pushing automakers higher every year, the smartest move you can make right now is to start tracking every liter or gallon you burn. Drivers who actively monitor and optimize their fuel usage routinely save 15–35% on fuel costs every single year—that's hundreds or even thousands of dollars back in your pocket.</p>
+        </section>
 
-</div>
+        <!-- Why Tracking Section -->
+        <section id="why-tracking">
+            <h2>Why Serious Fuel Tracking Changes Everything</h2>
+            <p>Tracking isn't just about writing down receipts. It reveals hidden patterns: unnecessary idling, aggressive acceleration, under-inflated tires, or routes that silently drain your tank. When you can see the real numbers, you gain control.</p>
+            
+            <ul class="benefits-list">
+                <li>You can cut annual fuel spending by hundreds of dollars with almost zero effort.</li>
+                <li>You extend engine and component life by catching problems early.</li>
+                <li>You reduce your carbon footprint—every 1 liter saved prevents about 2.3 kg of CO₂ from entering the atmosphere.</li>
+                <li>You make better decisions when buying your next vehicle or planning trips.</li>
+                <li>Fleet owners often see ROI within the first month of proper tracking.</li>
+            </ul>
+        </section>
 
+        <!-- Efficiency Tips Section -->
+        <section id="efficiency-tips">
+            <h2>30+ Proven Ways to Dramatically Improve Fuel Efficiency in 2025</h2>
+            
+            <div class="tips-container">
+                <div class="tip-card">
+                    <h4><i class="fas fa-car"></i> Driving Habits (Biggest Instant Impact)</h4>
+                    <ul>
+                        <li>Accelerate gently—harsh acceleration can waste up to 30% more fuel in city driving.</li>
+                        <li>Use cruise control on highways; it keeps you at the most efficient speed.</li>
+                        <li>Stay under 100 km/h (62 mph) whenever possible—drag increases exponentially above that.</li>
+                        <li>Avoid idling longer than 10 seconds; restarting uses less fuel than idling for 30+ seconds.</li>
+                        <li>Anticipate traffic—coasting to a stop instead of late braking saves significant fuel.</li>
+                        <li>Combine trips; a warm engine uses 20–30% less fuel than a cold one.</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-card">
+                    <h4><i class="fas fa-wrench"></i> Maintenance That Pays for Itself</h4>
+                    <ul>
+                        <li>Keep tires inflated to the manufacturer's recommended pressure—under-inflation by just 0.5 bar can increase consumption by 3–5%.</li>
+                        <li>Replace clogged air filters; a dirty filter can rob you of up to 10% efficiency.</li>
+                        <li>Use the correct grade of engine oil—modern low-viscosity synthetics can improve mileage by 1–2%.</li>
+                        <li>Get regular wheel alignment; misaligned wheels increase rolling resistance and fuel burn.</li>
+                        <li>Fix faulty oxygen sensors immediately—they can cause up to 40% richer fuel mixtures.</li>
+                        <li>Remove roof racks and boxes when not in use; they can cut highway efficiency by 10–25%.</li>
+                        <li>Lighten the load—every extra 50 kg reduces efficiency by roughly 1–2%.</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-card">
+                    <h4><i class="fas fa-microchip"></i> Fuel Choice & Technology Tips</h4>
+                    <ul>
+                        <li>Use Top-Tier gasoline when available—it contains better detergent packages and keeps injectors cleaner.</li>
+                        <li>Never top off the tank; it damages the evaporative emission system and wastes fuel.</li>
+                        <li>Turn off air-conditioning at low speeds and use ventilation instead; AC can increase consumption by 5–15% in city driving.</li>
+                        <li>Switch to Eco or Comfort mode if your car has it—many modern vehicles reduce throttle response and optimize shifting for economy.</li>
+                        <li>Consider a plug-in hybrid or full electric for long-term savings if your driving pattern allows it.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="stat-container">
+                <div class="stat-item">
+                    <span class="stat-number">30%</span>
+                    <span class="stat-label">Fuel Wasted by Harsh Acceleration</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">40%</span>
+                    <span class="stat-label">Richer Fuel Mix from Faulty Sensors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">25%</span>
+                    <span class="stat-label">Efficiency Loss from Roof Racks</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Podcast Section -->
+        <section id="podcast">
+            <h2>Listen to the Experts</h2>
+            <p>For an entertaining and in-depth discussion on fuel myths, real-world efficiency tricks, and future trends, check out this excellent podcast episode:</p>
+            
+            <div class="podcast-section">
+                <div class="podcast-player">
+                    <div class="podcast-icon">
+                        <i class="fas fa-podcast"></i>
+                    </div>
+                    <div class="podcast-info">
+                        <div class="podcast-title">Fuel Efficiency Unpacked – Expert Strategies & Myths Busted (2025)</div>
+                        <a href="https://podcast.kkbox.com/tw/episode/0nAzVZpydeEr2kHR4E" target="_blank" class="listen-btn">Listen to the Full Episode Here</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracker Section -->
+        <section id="tracker">
+            <h2>Your Free 2025 Fuel Tracking Command Center</h2>
+            <p>We've built and continuously update a powerful, completely free Google Sheet that thousands of drivers and fleet managers already use. It includes:</p>
+            
+            <div class="tracker-section">
+                <div class="tracker-features">
+                    <div class="tracker-feature">
+                        <i class="fas fa-calculator"></i>
+                        <p>Automatic MPG / L/100 km calculator</p>
+                    </div>
+                    <div class="tracker-feature">
+                        <i class="fas fa-dollar-sign"></i>
+                        <p>Cost-per-km tracker with local price updates</p>
+                    </div>
+                    <div class="tracker-feature">
+                        <i class="fas fa-car-side"></i>
+                        <p>Vehicle comparison tables</p>
+                    </div>
+                    <div class="tracker-feature">
+                        <i class="fas fa-tools"></i>
+                        <p>Maintenance schedule reminders</p>
+                    </div>
+                    <div class="tracker-feature">
+                        <i class="fas fa-users"></i>
+                        <p>Community-submitted real-world data from hundreds of models</p>
+                    </div>
+                    <div class="tracker-feature">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Fuel-price trend charts</p>
+                    </div>
+                </div>
+                
+                <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSaNK6iSXH1-JZSk52TQKh_ihBO52qYX1wufrVGuw_3y5if2jWRJHJiUnrUw4u5B0LRxEHA6Tw_FZOL/pubhtml" target="_blank" class="tracker-btn">2025 Ultimate Fuel Efficiency & Cost Tracker (Free Forever)</a>
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section id="conclusion">
+            <h2>Final Thoughts</h2>
+            <p>The drivers and businesses that win in 2025 aren't the ones with the fanciest cars—they're the ones who measure, understand, and act on their fuel data. Start logging your fill-ups today, apply even a handful of the tips above, and you'll be shocked at how quickly the savings add up. Smarter fuel habits = more money in your pocket and a cleaner planet.</p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <h2>Frequently Asked Questions (FAQ)</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How much money can I really save by tracking fuel?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The average driver who switches from "fill and forget" to active tracking and optimization saves $300–$800 per year. Heavy commuters or fleet operators frequently save several thousand dollars annually.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is it worth tracking if I drive an electric or hybrid car?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. While you don't buy gasoline, you still spend money on electricity and tire/brake wear. Tracking helps maximize range, plan charging, and extend battery life.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do phone apps work as well as a spreadsheet?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Apps are convenient for quick entry, but a customizable spreadsheet gives you deeper analysis, historical charts, and multi-vehicle support that most free apps lack.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How often should I check tire pressure?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>At least once a month and before long trips. Temperature changes of 10 °C can alter pressure by roughly 0.1 bar, directly affecting fuel economy.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Will premium fuel always improve efficiency?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Only in engines specifically designed for it. In most regular cars, premium fuel offers little or no benefit and simply costs more.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is idling ever better than turning the engine off?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Rarely. Modern engines use almost no extra fuel on restart. Turning off after 10–15 seconds almost always saves fuel.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How accurate are the fuel economy numbers shown on my dashboard?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>They are usually optimistic by 5–15%. Manual calculation (kilometers driven ÷ liters filled) remains the gold standard.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I share the Google Sheet with my family or company?</h3>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes—the published version is view-only and can be shared with anyone. Make your own copy if you want to add personal data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('.nav-item').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for Section Animations
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Animate statistics on scroll
+        const animateStats = () => {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                const isPercentage = finalValue.includes('%');
+                
+                let numericValue = parseInt(finalValue.replace(/[^0-9]/g, ''));
+                let currentValue = 0;
+                const increment = numericValue / 50;
+                
+                const updateStat = () => {
+                    if (currentValue < numericValue) {
+                        currentValue += increment;
+                        if (currentValue > numericValue) currentValue = numericValue;
+                        
+                        let displayValue = Math.floor(currentValue);
+                        if (isPercentage) displayValue += '%';
+                        
+                        stat.textContent = displayValue;
+                        requestAnimationFrame(updateStat);
+                    } else {
+                        stat.textContent = finalValue;
+                    }
+                };
+                
+                updateStat();
+            });
+        };
+
+        // Trigger stat animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-container').forEach(container => {
+            statsObserver.observe(container);
+        });
+
+        // Add interactive hover effect to tip cards
+        document.querySelectorAll('.tip-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
-
